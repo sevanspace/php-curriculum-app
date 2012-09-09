@@ -1,0 +1,97 @@
+<?php
+$lessonName = $_POST['lessonName'];
+?>
+
+<HTML>
+<HEAD>
+
+
+</HEAD>
+
+
+<body>
+<form name="classic" action="lessonsubmit.php" method="post" enctype="multipart/form-data">
+Select method of lesson content entry:
+<br>
+<input type="radio" name="choice" multiple="false" value="1" onclick ="javascript:ShowHide(1)"/> Text <br>
+<input type="radio" name="choice" multiple="false" value="2" onclick ="javascript:ShowHide(2)"/> File <br>
+<input type="radio" name="choice" multiple="false" value="3" onclick ="javascript:ShowHide(3)"/> Link <br>
+
+<!-- not needed anymore
+<br>
+<a onclick ="javascript:ShowHide(0)" href="javascript:;" >Enter Text</a>
+<br>
+<a onclick ="javascript:ShowHide(1)" href="javascript:;" >Submit File</a>
+<br>
+<a onclick ="javascript:ShowHide(2)" href="javascript:;" >Enter Link</a>
+<br>
+<br>
+<br>
+-->
+<br>
+<div class="mid" id=1 style="DISPLAY: none" >
+<textarea name="lessontext" rows = 30 cols = 80></textarea> 
+</div>
+
+
+<div class="mid" id=2 style="DISPLAY: none">
+<input type="file" name="file" id="file">
+</div>
+
+<div class="mid" id=3 style="DISPLAY: none">
+<input type="text" name="lessonlink">
+</div>
+
+<script language="JavaScript">
+function ShowHide(divId){
+	if(document.getElementById(divId).style.display == 'none'){
+		document.getElementById(divId).style.display='block'
+		for(i=0; i<10; i++){
+			if(document.getElementById(i) != document.getElementById(divId)){
+				document.getElementById(i).style.display = 'none'
+			}
+		}
+	}
+	
+//NOT NEEDED b/c the submit will only accept whatever choise is selected
+//function clearContents(element1, element2) {
+//	element1.value= "";
+//	element2.value= "";
+//}
+}
+</script>
+
+<br><br>	
+<?php
+echo ' <input type="submit" value="' . $lessonName . '" name="Next"/>';
+?>
+	<br>
+	<br>
+	
+
+<!--
+<a onclick ="javascript:ShowHide("HiddenText")" href="javascript:;" >Enter Text</a>
+
+<div id="HiddenText" class="mid"  style="DISPLAY: none" >
+	<br>
+	Hello Text
+	<textarea name="lessontext" rows = 30 cols = 80></textarea> 
+	<br>
+</div>
+
+<script language="JavaScript">
+	function ShowHide(divName) {
+		document.getElementByID(divName).style.display = "block"
+		//for (i==0; i<10; i++) {
+		//	if(document.getElementsByName(divName).id != i){
+		//		document.getElementsById(i).style.display = "none"
+		//	}
+		// }
+	}
+</script> -->
+</form>
+
+</body>
+
+
+</HTML>

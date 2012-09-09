@@ -1,0 +1,208 @@
+<?php
+$con = mysql_connect("www.freesql.org","evantest","legodude232");
+if (!$con)
+  {
+  die('Could not connect: ' . mysql_error());
+  }
+  else
+  {
+  echo "Connected!<br>";
+  }
+
+mysql_select_db("evanstorage") or die(mysql_error());
+echo "Connected to Database<br>";
+
+sleep(1);
+ob_end_clean();
+?>
+
+<HTML>
+<HEAD>
+
+
+</HEAD>
+
+
+<body>
+<form name="form" action="prereqsubmit.php" method="post" enctype="multipart/form-data" onsubmit="selectAll()">
+	<br>
+	<!-- select topic for new lesson to fall under -->
+	Choose the topic for the new lesson: <br>
+	<select name="topicUnder" id ="topicselect" onchange ="javascript:ShowHide()">
+		<option value="Topic A" >Topic A</option>
+		<option value="Topic B" >Topic B</option>
+		<option value="Topic C" >Topic C</option>
+		<option value="Topic D" >Topic D</option>
+		<option name="newtopt" id="newtopt" value="NewTopicCheck" >New Topic</option>
+	</select>
+	<br>
+	<div name="newtdiv" id="newtdiv" >
+		Name new topic:<br>
+		<input type="text" name="newTopicName"/> 
+		
+	</div>
+	
+	<div>
+	<br><br>
+	Lesson title:<br>
+	<input type="text" name="lessonName">
+	<br><br>
+	Prerequisites
+	<br>
+	<select name="topics" id="topics" size="4" onChange="updatelessons(this.selectedIndex)" style="width: 150px">
+		<option value="Topic A">Topic A</option>
+		<option value="Topic B">Topic B</option>
+		<option value="Topic C">Topic C</option>
+		<option value="Topic D">Topic D</option>
+	</select>
+
+	<select name="lessons" id="lessons" size="4" style="width: 150px" >
+	</select>
+	<input
+		type="button"
+		value="Add"
+
+		onclick="addlesson(document.form.topics.selectedIndex, document.form.lessons.selectedIndex)">
+	
+	<br>
+	<br>
+	Selected:
+	<br>
+	<select multiple="multiple" name="selected[]" id="selected"  size="4" style="width: 150px">
+	</select>
+	<input
+		type="button"
+		value="Remove"
+
+		onclick="removelesson()">
+		
+<br><br>	
+<input
+	type="submit" value="Submit">
+	<br>
+<a href="prereqsubmit.php">Next</a>		
+
+</div>
+</form>
+
+<br>
+<br>
+
+
+
+<script type="text/javascript" language="JavaScript">
+
+	document.getElementById("newtdiv").style.display = 'none'
+	
+	var topicslist=document.form.topics
+	var lessonslist=document.form.lessons
+	var selectedlist=document.form.selected
+	var newtopicfield=document.form.newTopic
+	//var selectedlist=document.form.getElementById("selected")
+	
+	var alreadyAdded = new Boolean(0)
+	
+	//this array will need to draw from previously user-defined values
+	var lessons=new Array()
+	lessons[0]=["Lesson 1", "Lesson 2", "Lesson 3"]
+	lessons[1]=["Lesson 4", "Lesson 5", "Lesson 6"]
+	lessons[2]=["Lesson 7", "Lesson 8", "Lesson 9"]
+	lessons[3]=["Lesson 10", "Lesson 11", "Lesson 12"]
+
+/*
+	if(document.getElementById("newt").selected){
+		document.getElementById("newTopic").style.display = 'block'
+	}
+	else {
+		document.getElementById("newTopic").style.dsiplay = 'none'
+	}
+*/	
+		function ShowHide(){
+			if(document.getElementById("newtopt").selected){
+				document.getElementById('newtdiv').style.display = 'block'
+			}
+			else{
+			document.getElementById('newtdiv').style.display = 'none'
+			}
+		}
+		
+/*	
+	function Show(){
+		if(document.getElementById("newt").selected)
+		}
+	}
+	
+	function Hide(){
+		if(newtopicfield.style.display != 'none'){
+			newtopicfield.style.display = 'none'
+		}
+	}
+
+/*	
+	//reveal newTopicName input
+	function Show(divId){
+		if(document.form.getElementById(divId).style.display == 'none'){
+			document.form.getElementById(divId).style.display='block'
+		}
+	}
+	
+	function Hide(divId){
+		if(document.form.getElementById(divId).style.display != 'none'){
+			document.form.getElementById(divId).style.display='none'
+		}
+	}
+*/	
+	
+	
+	//shows lessons based on topic selected
+	function updatelessons(selectedlessongroup){
+		lessonslist.options.length=0
+		for (i=0; i<lessons[selectedlessongroup].length; i++)
+			lessonslist.options[lessonslist.options.length]=new Option(lessons[selectedlessongroup][i])
+		
+		lessonslist.options[0].defaultSelected = true
+		
+	}
+	//adds selected lesson to "Selected" field
+	function addlesson(topicselection, lessonselection){
+		alreadyAdded = false
+		for(i=0; i<selectedlist.options.length; i++) {
+			if(selectedlist.options[i].text == lessons[topicselection][lessonselection]){
+				alreadyAdded = true
+			}
+		}
+		if (alreadyAdded == false) {
+			selectedlist.add(new Option(lessons[topicselection][lessonselection]), null)
+			selectedlist.options[selectedlist.options.length - 1].defaultSelected = true
+		}
+	
+	
+	}
+	//removes selected lesson in Selected field from Selected field
+	function removelesson(){
+		//alreadyAdded = false
+		for (var i = selected.options.length-1; i>=0; i--){
+			if(selectedlist.options[i].selected){
+				selectedlist.remove(selectedlist.options[i])
+			}
+		}
+		//selectedlist.remove(selectedselection)
+		//selectedlist.options[selectedlist.options.length - 1].defaultSelected = true
+	
+	
+	}
+	
+	function selectAll(){
+		for (var i=0; i<selectedlist.options.length; i++) {
+			selectedlist.options[i].selected = true;
+		}
+	}
+	
+
+</script>
+
+
+</body>
+
+
+</HTML>

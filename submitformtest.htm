@@ -1,0 +1,114 @@
+<html>
+
+input_text_to_db_form.asp
+<font face = "arial" size="1">
+<form method="post" action="input_text_to_db.asp">
+<input type="hidden" name="subject" value="<%= title %>">
+First Name<br>
+<input type="text" name="u_fname" size="20"><br>
+Last Name<br>
+<input type="text" name="u_lname" size="20">
+<input type="submit" value="Submit">
+</form></font>
+
+<!--input_text_to_db.asp-->
+<%
+ u_lname=request.form("u_lname")
+u_fname=request.form("u_fname")
+%>
+
+<%
+accessdb="testinputdb" 
+cn="DRIVER={Microsoft Access Driver (*.mdb)};"
+cn=cn & "DBQ=" & server.mappath(accessdb)
+set rs = server.createobject("ADODB.Recordset")
+
+SQL = "insert into testtable (lname, fname) "
+
+SQL = SQL & "values ('" & u_lname 
+SQL = SQL & "','" & u_fname & "')"
+
+rs.Open sql, cn
+%>
+<font face = "arial" size="1">
+First Name <%= u_fname %>
+<br>
+Last Name <%= u_lname %>
+<br>
+has been added to the db <br>
+<a href = "input_text_db_view.asp">View the Table</a>
+</font>
+
+<!--input_text_to_db_view.asp-->
+<%
+accessdb="testinputdb" 
+cn="DRIVER={Microsoft Access Driver (*.mdb)};"
+cn=cn & "DBQ=" & server.mappath(accessdb)
+Set rs = Server.CreateObject("ADODB.Recordset")
+
+sql = "select * from testtable" 
+
+rs.Open sql, cn
+%>
+
+<div align="left">
+
+<table BORDER="0" BGCOLOR="#FFFFFF" CELLSPACING="0" align="left" width="640">
+<THEAD>
+
+<tr>
+<th valign="top" align="left"><font face="Arial" size="2" color="#000000">First Name</font></th>
+<th valign="top" align="left"><font face="Arial" size="2" color="#000000">Last Name</font></th>
+<th valign="top" align="left"><font face="Arial" size="2" color="#000000">Unique ID</font></th>
+</tr>
+</THEAD>
+<TBODY>
+
+<%
+On Error Resume Next
+rs.MoveFirst
+do while Not rs.eof
+%>
+
+<tr VALIGN="TOP">
+<td ALIGN="left" valign="top">
+<font face="Arial" size="2" color="#000000">
+<%= rs("fname") %>
+</font></td>
+
+<td ALIGN="left" valign="top">
+<font face="Arial" size="2" color="#000000">
+<%= rs("lname") %>
+</font></td>
+
+<td ALIGN="left" valign="top">
+<font face="Arial" size="2" color="#000000">
+<%= rs("unique_id") %>
+</font></td>
+
+</tr>
+
+<%
+rs.MoveNext
+loop%>
+
+<tr VALIGN="TOP">
+<td ALIGN="left" valign="top">
+&nbsp;</td>
+
+<td ALIGN="left" valign="top">
+&nbsp;</td>
+
+<td ALIGN="left" valign="top">
+&nbsp;</td>
+
+</tr>
+
+</TBODY>
+<TFOOT>
+</TFOOT>
+</table>
+</div>
+
+ </html
+

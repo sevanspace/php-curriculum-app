@@ -1,0 +1,54 @@
+<HTML>
+<HEAD>
+<SCRIPT LANGUAGE="JavaScript">
+<!-- Beginning of JavaScript -
+
+
+
+function MsgBox (textstring) {
+alert (textstring) }
+
+// - End of JavaScript - -->
+</SCRIPT>
+
+</HEAD>
+
+
+
+<BODY>
+
+
+<?php
+echo "Hello World";
+?>
+
+
+
+<!--<form action="form_action.asp" method="get">-->
+<form action="process.php" method="POST">
+First name: <input type="text" name="fname" /><br />
+Last name: <input type="text" name="lname" /><br />
+<input type="submit" value="Submit" />
+</form>
+
+<?php 
+
+if(isset($_POST['fname'])) { 
+    // grab data from form 
+    $fname = $_POST['fname']; 
+    $lname = $_POST['lname']; 
+
+    // open file handle to append 
+    $fp = fopen("log.txt",  "a");   
+
+    // write the slug to log.txt: 
+    fputs($fp, "First name: $fname, Last name: $lname\r\n"); 
+    fclose($fp);   
+} 
+
+?>
+
+
+
+</BODY>
+</HTML>

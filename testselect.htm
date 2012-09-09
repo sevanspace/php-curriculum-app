@@ -1,0 +1,56 @@
+<HTML>
+<HEAD>
+
+<SCRIPT type="text/javascript">
+
+	function showDiv(){
+		document.getElementById('Area1').style.display="block"
+
+
+/*
+  function SwitchHiddenDiv(){
+	
+
+  switch (document.getElementById("SelectedType").options[document.getElementById("SelectedType").selectedIndex].value){
+    case 'Type1': 
+	document.getElementById('Area1').style.display="block";
+	document.getElementById('Area2').style.display="block";
+	document.getElementById('Area3').style.display="none";
+	break;
+    case 'Type2':
+	document.getElementById('Area1').style.display="block";
+	document.getElementById('Area2').style.display="block";
+	document.getElementById('Area3').style.display="block";
+	break;
+    case 'Type3':
+	document.getElementById('Area1').style.display="block";
+	document.getElementById('Area2').style.display="none";
+	document.getElementById('Area3').style.display="none";
+	break;
+    default:
+	alert("Unknown type");
+  }
+
+  }
+*/
+</SCRIPT>
+
+<BODY name="body">
+ <FORM name="form" action='http://somesite.com/something' method='post'>
+    <P>
+
+    <select id='SelectedType' onchange='SwitchHiddenDiv();'>
+      <option value='Type1'>Type1</option>
+      <option value='Type2'>Type2</option>
+      <option value='Type3'>Type3</option>
+    </select>
+
+    <DIV id='Area1'>Area1</DIV>
+    <DIV id='Area2'>Area2</DIV>
+    <DIV id='Area3'>Area3</DIV>
+
+    <INPUT type='submit' value='Send'> <INPUT type='reset'>
+    </P>
+ </FORM>
+</BODY>
+</HTML>
